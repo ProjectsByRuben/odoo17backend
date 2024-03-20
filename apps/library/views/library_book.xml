@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="0">
+
+    <!-- vista form library.book -->
+    <record id="library_book_view_form" model="ir.ui.view">
+      <field name="name">library_book.view.form</field>
+      <field name="model">library.book</field>
+      <field name="arch" type="xml">
+        <form string="Book Form">
+          <sheet>
+            <group>
+              <field name="image" widget="image" class="oe_avatar" />
+            </group>
+            <group>
+              <field name="name"/>
+              <field name="date"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- vista tree library.book -->
+    <record id="library_book_view_tree" model="ir.ui.view">
+      <field name="name">library_book.view.tree</field>
+      <field name="model">library.book</field>
+      <field name="arch" type="xml">
+        <tree string="Book tree">
+          <field name="id" optional="hide"/>
+          <field name="name"/>
+          <field name="date"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- action view -->
+    <record id="action_library_book" model="ir.actions.act_window">
+      <field name="name">Library Book</field>
+      <field name="res_model">library.book</field>
+      <field name="view_mode">tree,form</field>
+      <field name="context">{}</field>
+    </record>
+  </data>
+</odoo>
