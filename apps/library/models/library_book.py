@@ -22,3 +22,6 @@ class LibraryBook(models.Model):
 
     author_id = fields.Many2one(
         "library.author", string="Author")
+
+    pages = fields.Integer(string="Pages")
+
