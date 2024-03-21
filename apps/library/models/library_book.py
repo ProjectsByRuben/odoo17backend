@@ -16,3 +16,9 @@ class LibraryBook(models.Model):
     date = fields.Date(string="Date")
 
     image = fields.Image()
+
+    stage_id = fields.Many2one(
+        "library.book.stage", string="Stage")
+
+    author_id = fields.Many2one(
+        "library.author", string="Author")
