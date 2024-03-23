@@ -25,11 +25,11 @@
                                 <field name="name"/>
                             </h2>
                         </div>
-                        <notebook colspan="4">
+                        <notebook >
                             <page string="Books">
-                                <group>
-                                    <group>
-                                        <field name="book_ids"  nolabel="1" style="min-width:450px">
+                                <group col="4">
+                                    <group string="Book Details">
+                                        <field name="book_ids" nolabel="1" colspan="3">
                                             <tree>
                                                 <field name="name"/>
                                                 <field name="date"/>
