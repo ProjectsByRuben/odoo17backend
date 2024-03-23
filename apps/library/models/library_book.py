@@ -21,4 +21,9 @@ class LibraryBook(models.Model):
         "library.author", string="Author")
     pages = fields.Integer(string="Pages")
     description = fields.Html(string="Description")
+    currency_id = fields.Many2one(
+        'res.currency',
+        default=lambda self: self.env.company.currency_id,
+        store=True)
+    price = fields.Monetary(string="Price")
     comments = fields.Text(string="Comments")
