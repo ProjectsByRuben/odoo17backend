@@ -1,8 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data noupdate="0">
-        <menuitem id="library_root" name="Library" sequence="1" web_icon="library,static/description/icon.png"/>
-        <menuitem id="library_book_categ" name="Books" sequence="1" parent="library.library_root" />
-        <menuitem id="menu_action_library_book" name="Book" sequence="1" parent="library_book_categ" action="library.action_library_book" />
+        <menuitem id="library_root"
+                  name="Library"
+                  sequence="1"
+                  web_icon="library,static/description/icon.png"/>
+        <menuitem id="library_book_categ"
+                  name="Books"
+                  sequence="1"
+                  parent="library.library_root"/>
+        <menuitem id="menu_action_library_book"
+                  name="Book"
+                  sequence="1"
+                  parent="library_book_categ"
+                  action="library.action_library_book"/>
+
+        <!-- Menú -->
+        <menuitem id="library_author_categ"
+                  name="Authors"
+                  sequence="1"
+                  parent="library.library_root"/>
+
+        <record id="menu_library_author" model="ir.ui.menu">
+            <field name="name">Authors</field>
+            <field name="action" ref="action_library_author"/>
+            <field name="parent_id" ref="library.library_author_categ"/>
+        </record>
     </data>
 </odoo>

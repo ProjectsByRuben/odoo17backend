@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
-        <record id="library_book_stage_1" model="library.book.stage">
-            <field name="name">Nuevo</field>
+    <data noupdate="0">
+        <record id="library_book_stage_new" model="library.book.stage">
+            <field name="name">Available</field>
         </record>
-        <record id="library_book_stage_2" model="library.book.stage">
-            <field name="name">Alquilado</field>
+        <record id="library_book_stage_rented" model="library.book.stage">
+            <field name="name">Rented</field>
+        </record>
+
+        <record id="library_book_stage_damaged" model="library.book.stage">
+            <field name="name">Damaged</field>
         </record>
     </data>
 </odoo>

@@ -13,15 +13,26 @@
                                options="{'clickable': '1'}"/>
                     </header>
                     <sheet>
-                        <group>
-                            <field name="image" widget="image" class="oe_avatar"/>
+                        <field name="image" widget="image" class="oe_avatar" nolabel="1"/>
+                        <group col="4" >
+                            <group colspan="2">
+                                <field name="name"/>
+                                <field name="date"/>
+                            </group>
+                            <group>
+                                <field name="isbn"/>
+                                <field name="pages"/>
+                                <field name="author_id"/>
+                            </group>
                         </group>
-                        <group>
-                            <field name="name"/>
-                            <field name="date"/>
-                            <field name="pages"/>
-                            <field name="author_id"/>
-                        </group>
+                        <notebook>
+                            <page string="Book Details" colspan="4">
+                                <group>
+                                    <field name="description" nolabel="1" colspan="2" placeholder="Description"/>
+                                    <field name="comments" nolabel="1" colspan="2" placeholder="Comments"/>
+                                </group>
+                            </page>
+                        </notebook>
                     </sheet>
                 </form>
             </field>

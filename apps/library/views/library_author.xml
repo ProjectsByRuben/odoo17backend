@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Vista Lista -->
+        <record id="view_library_author_list" model="ir.ui.view">
+            <field name="name">library.author.list</field>
+            <field name="model">library.author</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Vista Formulario -->
+        <record id="view_library_author_form" model="ir.ui.view">
+            <field name="name">library.author.form</field>
+            <field name="model">library.author</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <field name="image" class="oe_avatar" widget="image" nolabel="1"/>
+                        <div class="oe_title">
+                            <h2>
+                                <field name="name"/>
+                            </h2>
+                        </div>
+                        <notebook colspan="4">
+                            <page string="Books">
+                                <group>
+                                    <group>
+                                        <field name="book_ids"  nolabel="1" style="min-width:450px">
+                                            <tree>
+                                                <field name="name"/>
+                                                <field name="date"/>
+                                            </tree>
+                                        </field>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <!-- Acción de Vista -->
+        <record id="action_library_author" model="ir.actions.act_window">
+            <field name="name">Library Authors</field>
+            <field name="res_model">library.author</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>

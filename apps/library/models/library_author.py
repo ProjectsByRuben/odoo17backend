@@ -9,6 +9,13 @@ class LibraryAuthor(models.Model):
     _description = "Library author Model"
 
     name = fields.Char(
-        string="author",
+        string="Author",
         size=20,
     )
+
+    book_ids = fields.One2many(
+        comodel_name='library.book',
+        inverse_name="author_id",
+        string="Books")
+
+    image = fields.Image()
