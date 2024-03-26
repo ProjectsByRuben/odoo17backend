@@ -38,6 +38,9 @@
                                     </group>
                                 </group>
                             </page>
+                            <page string="Other">
+                                <group string="More info."/>
+                            </page>
                         </notebook>
                     </sheet>
                 </form>
