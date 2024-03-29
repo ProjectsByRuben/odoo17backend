@@ -20,7 +20,7 @@ class SaleOrder(models.Model):
         compute_sudo=True
     )
 
-    @api.depends('transaction_done_ids')
+    @api.depends('transaction_ids')
     def _compute_transactions_count(self):
         for tr in self:
             tr.transactions_count = len(tr.transaction_ids)
