@@ -6,22 +6,53 @@
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
+                <!--show payments button -->
+                <div name="button_box" position="inside">
+                    <button name="action_view_transactions"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-usd"
+                        invisible="transactions_count == 0">
+                        <field name="transactions_count" widget="statinfo" string="Payments"/>
+                    </button>
+                </div>
+                <!--Add new Page with Payments -->
                 <page name="customer_signature" position="after">
-                    <page string="Payments">
+                    <page string="Payments" invisible="not transaction_ids">
                         <!--el domain debe ser aplicado antes que se cargue la data de los registros
                         es por eso que no nos funciona aplicando el domain en el xml, y se tiene que hacer en el modelo
                         python, todo: revisarlo y veran como le hice
                         -->
                         <!--<field name="transaction_ids" domain="[('state', '=', 'done')]"/>-->
-                        <field name="transaction_ids">
-                            <tree>
-                                <field name="reference"/>
-                                <field name="partner_id"/>
-                                <field name="currency_id"/>
-                                <field name="amount" sum="Total" widget="monetary" options="{'currency_field': 'currency_id'}"/>
-                                <field name="state"/>
-                            </tree>
-                        </field>
+                        <group string="All Transactions" col="6">
+                            <field name="transaction_ids" nolabel="1" colspan="4">
+                                <tree>
+                                    <field name="reference"/>
+                                    <field name="partner_id"/>
+                                    <field name="currency_id"/>
+                                    <field name="amount" sum="Total" widget="monetary"
+                                           options="{'currency_field': 'currency_id'}"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
+                        </group>
+
+                        <group string="Done Transactions" col="6">
+                            <strong>Payments:
+                                <field name="transactions_count" class="badge rounded-pill bg-success text-white"
+                                       colspan="2"/>
+                            </strong>
+                            <field name="transactions_done_ids" nolabel="1" colspan="4">
+                                <tree>
+                                    <field name="reference"/>
+                                    <field name="partner_id"/>
+                                    <field name="currency_id"/>
+                                    <field name="amount" sum="Total" widget="monetary"
+                                           options="{'currency_field': 'currency_id'}"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
+                        </group>
                     </page>
                 </page>
             </field>
