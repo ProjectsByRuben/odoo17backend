@@ -38,11 +38,7 @@
                         </group>
 
                         <group string="Done Transactions" col="6">
-                            <strong>Payments:
-                                <field name="transactions_count" class="badge rounded-pill bg-success text-white"
-                                       colspan="2"/>
-                            </strong>
-                            <field name="transactions_done_ids" nolabel="1" colspan="4">
+                            <field name="transaction_done_ids" nolabel="1" colspan="4">
                                 <tree>
                                     <field name="reference"/>
                                     <field name="partner_id"/>
