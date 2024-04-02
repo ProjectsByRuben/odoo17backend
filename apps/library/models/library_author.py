@@ -12,10 +12,26 @@ class LibraryAuthor(models.Model):
         string="Author",
         size=20,
     )
-
+    image = fields.Image()
     book_ids = fields.One2many(
         comodel_name='library.book',
         inverse_name="author_id",
         string="Books")
+    book_ids_count = fields.Integer(compute="_compute_book_count")
+    dni = fields.Char(string="DNI")
+    passport = fields.Char(string="Passport")
 
-    image = fields.Image()
+    def _compute_book_count(self):
+        for rec in self:
+            rec.book_ids_count = len(rec.book_ids)
+
+    def view_action_books(self):
+        action = {
+            'name': "Books",
+            'type': "ir.actions.act_window",
+            'target': "current",
+            'res_model': "library.book",
+            'view_mode': "tree,form",
+            'domain': [('id', 'in', self.book_ids.ids)]
+        }
+        return action

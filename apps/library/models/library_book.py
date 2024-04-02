@@ -11,7 +11,7 @@ class LibraryBook(models.Model):
     name = fields.Char(
         string="Name",
     )
-
+    active = fields.Boolean(string="Active", default=True)
     isbn = fields.Char(string="ISBN", size=9)
     date = fields.Date(string="Publication Date")
     image = fields.Image()
