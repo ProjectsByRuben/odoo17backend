@@ -24,9 +24,13 @@
                                 <field name="isbn"/>
                                 <field name="pages"/>
                                 <field name="author_id"/>
+                                <field name="author_dni" invisible="not author_id"/>
                             </group>
                             <group>
                                 <field name="active"/>
+                            </group>
+                            <group>
+                                <field name="categ_ids"  widget="many2many_tags"/>
                             </group>
                         </group>
                         <notebook>
@@ -84,7 +88,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-8 fw-bolder" t-if="record.author_id.raw_value">
-                                            <span>Author:</span>
+                                            <span>By </span>
                                             <span t-out="record.author_id.value" class="fw-bolder"/>
                                         </div>
                                     </div>
@@ -112,7 +116,7 @@
             </field>
         </record>
 
-        <!-- action view -->
+        <!-- action view book -->
         <record id="action_library_book" model="ir.actions.act_window">
             <field name="name">Library Book</field>
             <field name="res_model">library.book</field>

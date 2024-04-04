@@ -20,15 +20,27 @@ class SaleOrder(models.Model):
         compute_sudo=True
     )
 
+    payments_total = fields.Float(
+        string="Total Payments",
+        readonly=True,
+        store=True,
+        precompute=True,
+        compute="_compute_payments_total")
+
+    @api.depends('transaction_done_ids', 'transaction_ids')
+    def _compute_payments_total(self):
+        for order in self:
+            order.payments_total = sum(x.amount for x in order.transaction_done_ids)
+
     @api.depends('transaction_ids')
     def _compute_transactions_count(self):
-        for tr in self:
-            tr.transactions_count = len(tr.transaction_ids)
+        for sale in self:
+            sale.transactions_count = len(sale.transaction_ids)
 
     @api.depends('transaction_ids')
     def _compute_done_transaction_ids(self):
-        for trans in self:
-            trans.transaction_done_ids = trans.transaction_ids.filtered(
+        for sale in self:
+            sale.transaction_done_ids = sale.transaction_ids.filtered(
                 lambda t: t.state == 'done')
 
     def action_view_transactions(self):

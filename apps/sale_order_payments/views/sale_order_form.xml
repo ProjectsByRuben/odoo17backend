@@ -43,11 +43,14 @@
                                     <field name="reference"/>
                                     <field name="partner_id"/>
                                     <field name="currency_id"/>
-                                    <field name="amount" sum="Total" widget="monetary"
-                                           options="{'currency_field': 'currency_id'}"/>
+                                    <field name="amount" sum="Total" widget="monetary" options="{'currency_field': 'currency_id'}"/>
                                     <field name="state"/>
                                 </tree>
                             </field>
+                        </group>
+
+                        <group>
+                            <field name="payments_total"/>
                         </group>
                     </page>
                 </page>

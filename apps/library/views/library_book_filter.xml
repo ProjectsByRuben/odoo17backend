@@ -8,8 +8,7 @@
                 <search string="Book Filter">
                     <field name="name" string="Name"/>
                     <field name="isbn" string="ISBN"/>
-                    <field name="date" string="Date"/>
-                    <field name="comments" string="Comments"/>
+                    <field name="isbn" string="ISBN"/>
                     <separator/>
                     <filter string="Active" name="filter_active"/>
                     <filter string="Archived" name="filter_archived" domain="[('active', '=', False)]"/>
@@ -24,6 +23,7 @@
                                 string="Stage"
                                 domain="[]"
                                 context="{'group_by' : 'stage_id'}"/>
+
                     </group>
                 </search>
             </field>

@@ -19,6 +19,8 @@ class LibraryBook(models.Model):
         "library.book.stage", string="Stage")
     author_id = fields.Many2one(
         "library.author", string="Author")
+
+    author_dni = fields.Char(string="Author's DNI", related="author_id.dni")
     pages = fields.Integer(string="Pages")
     description = fields.Html(string="Description")
     currency_id = fields.Many2one(
@@ -27,3 +29,9 @@ class LibraryBook(models.Model):
         store=True)
     price = fields.Monetary(string="Price")
     comments = fields.Text(string="Comments")
+
+    categ_ids = fields.Many2many(
+        comodel_name="library.book.category",
+        column1="book_id",
+        column2="category_id",
+        string="Categories")
