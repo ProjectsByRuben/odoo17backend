@@ -12,3 +12,5 @@ class BookCategory(models.Model):
         string="Category Name",
         size=20,
     )
+
+    color = fields.Integer(string="Color")

@@ -19,6 +19,7 @@
                                 <field name="name"/>
                                 <field name="date"/>
                                 <field name="price"/>
+                                <field name="active" widget="boolean_toggle"/>
                             </group>
                             <group>
                                 <field name="isbn"/>
@@ -26,11 +27,10 @@
                                 <field name="author_id"/>
                                 <field name="author_dni" invisible="not author_id"/>
                             </group>
-                            <group>
-                                <field name="active"/>
-                            </group>
-                            <group>
-                                <field name="categ_ids"  widget="many2many_tags"/>
+                            <separator />
+                            
+                            <group colspan="3">
+                                <field name="categ_ids"  widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}"/>
                             </group>
                         </group>
                         <notebook>

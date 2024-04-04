@@ -11,7 +11,7 @@
     'author': "Praxya Sol.",
     'website': "https://www.praxya.com",
     'category': 'Services',
-    'version': '0.8',
+    'version': '0.9',
     'license': 'AGPL-3',
     'application': True, 
 
@@ -26,6 +26,7 @@
         "views/library_author.xml",
         "views/menus.xml",
         "data/stage.xml",
+        "data/categories.xml",
     ],
 }
 
