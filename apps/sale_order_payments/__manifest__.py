@@ -11,7 +11,7 @@
     'author': "Praxya Sol.",
     'website': "https://www.praxya.com",
     'category': 'Sales',
-    'version': '0.4',
+    'version': '0.5',
     'license': 'AGPL-3',
 
     'depends': ['sale',],
