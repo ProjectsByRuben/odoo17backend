@@ -118,7 +118,7 @@
 
         <!-- action view book -->
         <record id="action_library_book" model="ir.actions.act_window">
-            <field name="name">Library Book</field>
+            <field name="name">Books</field>
             <field name="res_model">library.book</field>
             <field name="view_mode">kanban,tree,form</field>
             <field name="context">{'search_default_group_by_stage_id': True, 'search_default_filter_active': True}</field>

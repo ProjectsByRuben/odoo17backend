@@ -19,14 +19,14 @@
     'depends': ['base',],
 
     # always loaded
-    'data': [
+    "data": [
         "security/ir.model.access.csv",
         "views/library_book.xml",
         "views/library_book_filter.xml",
         "views/library_author.xml",
+        "views/library_book_category_views.xml",
         "views/menus.xml",
         "data/stage.xml",
         "data/categories.xml",
     ],
 }
-
