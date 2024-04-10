@@ -3,3 +3,4 @@ library.access_library_book,access_library_book,library.model_library_book,base.
 library.access_library_book_stage,access_library_book_stage,library.model_library_book_stage,base.group_user,1,1,1,1
 library.access_library_author,access_library_author,library.model_library_author,base.group_user,1,1,1,1
 library.access_library_book_category,access_library_book_category,library.model_library_book_category,base.group_user,1,1,1,1
+library.access_library_book_order_manager,library_book_order_manager,library.model_library_book_order,base.group_user,1,1,1,1

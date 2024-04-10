@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields
+from odoo import api, models, fields
+from odoo.exceptions import ValidationError
 
 
 class LibraryBook(models.Model):
-    _name = 'library.book'
+    _name = "library.book"
 
     _description = "Library Book Model"
 
@@ -15,23 +16,42 @@ class LibraryBook(models.Model):
     isbn = fields.Char(string="ISBN", size=9)
     date = fields.Date(string="Publication Date")
     image = fields.Image()
-    stage_id = fields.Many2one(
-        "library.book.stage", string="Stage")
-    author_id = fields.Many2one(
-        "library.author", string="Author")
+    stage_id = fields.Many2one("library.book.stage", string="Stage")
+    author_id = fields.Many2one("library.author", string="Author")
 
     author_dni = fields.Char(string="Author's DNI", related="author_id.dni")
     pages = fields.Integer(string="Pages")
     description = fields.Html(string="Description")
     currency_id = fields.Many2one(
-        'res.currency',
+        "res.currency",
         default=lambda self: self.env.company.currency_id,
-        store=True)
-    price = fields.Monetary(string="Price")
+        store=True,
+    )
+    price = fields.Monetary(
+        string="Price", groups="library.library_group_admin"
+    )
     comments = fields.Text(string="Comments")
 
     categ_ids = fields.Many2many(
         comodel_name="library.book.category",
         column1="book_id",
         column2="category_id",
-        string="Categories")
+        string="Categories",
+    )
+
+    @api.constrains("isbn")
+    def _check_unique_isbn(self):
+        domain = [("id", "!=", self.id), ("isbn", "in", self.mapped("isbn"))]
+        books = self.env["library.book"].search(domain)
+        if books:
+            raise ValidationError("ISBN must be unique")
+
+    @api.onchange("author_id")
+    def _onchnage_author(self):
+        return {
+            "warning": {
+                "title": "Warning",
+                "message": "Author changed: {}".format(self.author_id.name),
+                "type": "notification",
+            },
+        }
