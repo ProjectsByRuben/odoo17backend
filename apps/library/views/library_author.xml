@@ -34,7 +34,8 @@
                                 <field name="name"/>
                             </h2>
                             <h3>
-                                <field name="dni" placeholder="DNI..."/>
+                                <field name="can_edit" invisible="1"/>
+                                <field name="dni" placeholder="DNI..." readonly="not can_edit"/>
                             </h3>
                         </div>
                         <notebook >

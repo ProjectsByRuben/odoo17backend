@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields
+from odoo import api, models, fields
 
 
 class LibraryAuthor(models.Model):
@@ -19,6 +19,15 @@ class LibraryAuthor(models.Model):
     book_ids_count = fields.Integer(compute="_compute_book_count")
     dni = fields.Char(string="DNI")
     passport = fields.Char(string="Passport")
+
+    can_edit = fields.Boolean(compute="_can_edit")
+
+    @api.depends_context("uid")
+    def _can_edit(self):
+        for rec in self:
+            rec.can_edit = self.env.user.has_group(
+                "library.library_group_admin"
+            )
 
     def _compute_book_count(self):
         for rec in self:

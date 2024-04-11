@@ -7,7 +7,7 @@
         <menuitem id="library_root"
                   name="Library"
                   sequence="1"
-                  groups="library.library_group_user,library.library_group_admin"
+                  groups="library.library_group_user"
                   web_icon="library,static/description/library_icon.png"/>
         <menuitem id="library_book_categ"
                   name="Books"
