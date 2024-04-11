@@ -19,11 +19,17 @@ class BookCategory(models.Model):
     @api.ondelete(at_uninstall=False)
     def _unlink_except_master_category(self):
         master_xmlids = [
-            "library_book_category_1",
+            "library.library_book_category_1",
         ]
+        # check if category un master data, root data
         for master_xmlid in master_xmlids:
-            master_tag = self.env.ref(
-                f"library.{master_xmlid}", raise_if_not_found=False
-            )
-            if master_tag and master_tag in self:
+            if master_xmlid in self.get_external_id().values():
                 raise UserError("No puedes eliminar esta Categoria!")
+        # check if category in books
+        book_categ_ids = (
+            self.env["library.book"].search([]).mapped("categ_ids").ids
+        )
+        if any(self.ids) in book_categ_ids:
+            raise UserError(
+                "Esta categoria esta usada en uno o varios Libros"
+            )

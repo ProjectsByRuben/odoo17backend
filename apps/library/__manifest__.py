@@ -5,10 +5,10 @@
     "description": """
     Library Management
     """,
-    "author": "Praxya Sol.",
+    "author": "Praxya Soluciones",
     "website": "https://www.praxya.com",
     "category": "Services",
-    "version": "1.1",
+    "version": "1.2",
     "license": "AGPL-3",
     "application": True,
     # any module necessary for this one to work correctly
