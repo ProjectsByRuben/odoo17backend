@@ -19,12 +19,12 @@
     "data": [
         "security/ir.model.access.csv",
         "security/groups.xml",
-        "views/book_views.xml",
-        "views/author_views.xml",
-        "views/book_category_views.xml",
-        "views/book_order_views.xml",
+        "views/library_book_views.xml",
+        "views/library_author_views.xml",
+        "views/library_book_category_views.xml",
+        "views/library_book_order_views.xml",
         "views/menus.xml",
-        "data/stage.xml",
-        "data/categories.xml",
+        "data/library_book_stages.xml",
+        "data/library_book_categories.xml",
     ],
 }
