@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- QWeb Reports -->
+        <record id="sale_order_report_2" model="ir.actions.report">
+            <field name="name">Pedidos 2</field>
+            <field name="model">sale.order</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">sale_custom_report.report_sale_2</field>
+            <field name="report_file">sale_custom_report.report_sale_2</field>
+            <field name="print_report_name">'pedido_venta2'</field>
+            <field name="attachment" />
+            <field name="binding_model_id" ref="sale.model_sale_order"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>
