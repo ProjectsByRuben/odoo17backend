@@ -8,7 +8,7 @@
     "author": "Praxya Soluciones",
     "website": "https://www.praxya.com",
     "category": "Services",
-    "version": "1.4",
+    "version": "1.5",
     "license": "AGPL-3",
     "application": True,
     # any module necessary for this one to work correctly

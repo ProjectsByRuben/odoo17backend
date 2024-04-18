@@ -13,7 +13,7 @@ class LibraryBook(models.Model):
         string="Name",
     )
     active = fields.Boolean(string="Active", default=True)
-    isbn = fields.Char(string="ISBN", size=9)
+    isbn = fields.Char(string="ISBN", size=9, required=True)
     date = fields.Date(string="Publication Date")
     image = fields.Image()
     stage_id = fields.Many2one("library.book.stage", string="Stage")
@@ -55,3 +55,15 @@ class LibraryBook(models.Model):
                 "type": "notification",
             },
         }
+
+    @api.model
+    def default_get(self, fields_list):
+        res = super(LibraryBook, self).default_get(fields_list)
+        stage_id = self.env.ref("library.library_book_stage_new")
+        if stage_id:
+            res["stage_id"] = stage_id.id
+        domain = [("name", "in", ["Frontend", "Backend"])]
+        def_tag_ids = self.env["library.book.category"].search(domain)
+        if def_tag_ids:
+            res["categ_ids"] = [(6, 0, def_tag_ids.ids)]
+        return res
