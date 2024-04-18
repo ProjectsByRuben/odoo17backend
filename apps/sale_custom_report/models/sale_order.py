@@ -15,13 +15,12 @@ class SaleOrder(models.Model):
         query = f"""
         SELECT
         SALE_ORDER.ID,
-        SUM(    {so_line}.PRODUCT_UOM_QTY) AS CANTIDAD
+        SUM({so_line}.PRODUCT_UOM_QTY) AS CANTIDAD
         FROM
             SALE_ORDER
             INNER JOIN  {so_line} ON SALE_ORDER.ID = {so_line}.ORDER_ID
         WHERE
             SALE_ORDER.ID = %s
-            AND SALE_ORDER.STATE IN ('sale', 'sent')
         GROUP BY
             SALE_ORDER.ID
         ORDER BY
