@@ -1,0 +1,17 @@
+
+########### alias linux ########
+
+# inicia odoo 17 por terminal
+alias odoo17="/home/jcm/miniconda3/envs/venv_o17/bin/python /home/jcm/odoo_dev/odoo17/odoo/odoo-bin -c /home/jcm/odoo_dev/odoo17/config/odoo17.conf"
+# inicia odoo en modo shell (le tienes que pasar la base de datos al final: odoo17_shell -d my_db)
+alias odoo17_shell="/home/jcm/miniconda3/envs/venv_o17/bin/python /home/jcm/odoo_dev/odoo17/odoo/odoo-bin shell -c /home/jcm/odoo_dev/odoo17/config/odoo17.conf"
+
+# otro alias para lanzar odoo pero el 15 (opcional mio)
+alias odoo15="/home/jcm/miniconda3/envs/venv_o15/bin/python /home/jcm/odoo_dev/odoo15/odoo/odoo-bin -c /home/jcm/odoo_dev/odoo15/config/odoo15.conf"
+
+### matar procesos activos que se quedan colgando de odoo (puede pasar algun rato)
+alias kill-odoo="ps aux |grep odoo-bin | awk '{print \$2}' | xargs kill -9"
+alias kill-odoo2="pkill -f odoo-bin"
+
+## muestra los procesos de odoo activos
+alias odoops="ps aux |grep odoo-bin"
