@@ -1,12 +1,14 @@
 #!/bin/bash
 # Copyright 2024 odooerpcloud.com
-# AVISO IMPORTANTE!!! (WARNING!!!)
-# ASEGURESE DE TENER UN SERVIDOR / VPS CON AL MENOS > 2GB DE RAM
-# You must to have at least > 2GB of RAM
-# >= 20GB SSD
-# SO Compatibles: Ubuntu 22.04 LTS, 23.10 y  Debian 12
-# v4.0 Production version Odoo 17
-# Last updated: 2024-03-13
+# !!! (WARNING!!!)
+# Hardware Requirements:
+#   * >=2GB RAM
+#   * 20-40GB SSD
+# Software Requirements:
+#   * Ubuntu 22.04, 24.04 LTS Desktop or Server Edition, Debian 12
+# v4.1 Production version for Odoo 17.0 Coomunity or Enterprise Edition
+# See tutorial for Odoo Enterprise Integration.
+# Last updated: 2024-10-04
 
 OS_NAME=$(lsb_release -cs)
 usuario=$USER
@@ -14,15 +16,20 @@ DIR_PATH=$(pwd)
 VCODE=17
 VERSION=17.0
 OCA_VERSION=17.0
+# A. Set Odoo default Port
 PORT=1769
 DEPTH=1
-SERVICE_NAME=odoo17
+# B. Set the project name (default /opt/odoo17)
+# (Lowercase PROJECT_NAME without spaces. e.g. my_project_name_1)
 PROJECT_NAME=odoo17
+SERVICE_NAME=$PROJECT_NAME
 
 PATHBASE=/opt/$PROJECT_NAME
 PATH_LOG=$PATHBASE/log
 PATHREPOS=$PATHBASE/extra-addons
 PATHREPOS_OCA=$PATHREPOS/oca
+# C. Set PostreSQL version:
+PG_VERSION=16
 
 wk64=""
 wk32=""
@@ -34,7 +41,8 @@ then
 
 fi
 
-if [[ $OS_NAME == "jammy" ]];
+# the official version for Noble is not available yet, we use Jammy
+if [[ $OS_NAME == "jammy" || $OS_NAME == "noble" ]];
 
 then
 	wk64="https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-2/wkhtmltox_0.12.6.1-2.jammy_amd64.deb"
@@ -58,15 +66,24 @@ then
 fi
 
 echo $wk64
-sudo adduser --system --quiet --shell=/bin/bash --home=$PATHBASE --gecos 'ODOO' --group $usuario
-sudo adduser $usuario sudo
+sudo useradd -m  -d $PATHBASE -s /bin/bash $usuario
+# uncomment if you get sudo permissions
+#sudo adduser $usuario sudo
 
 #add universe repository & update (Fix error download libraries)
+export DEBIAN_FRONTEND=noninteractive
 sudo add-apt-repository universe
+# add suport for Odoo we need to downgrade python 3.11 Venv
+sudo add-apt-repository ppa:deadsnakes/ppa
 sudo apt-get update
 sudo apt-get upgrade
 
-#### nuevas forma instalar dependencias odoo 16
+#### Install new Dependencies and Packages
+sudo apt install --no-install-recommends \
+    python3.11-dev \
+    python3.11-venv \
+
+#### Install Dependencies and Packages
 sudo apt-get update && \
 sudo apt-get install -y --no-install-recommends \
     ca-certificates \
@@ -91,7 +108,6 @@ sudo apt-get install -y --no-install-recommends \
     python3-dev \
     python3-venv \
     libxml2-dev \
-    libxml2-dev \
     libxslt1-dev \
     libevent-dev \
     libpng-dev \
@@ -106,10 +122,21 @@ sudo apt-get install -y --no-install-recommends \
 
 ##################end python dependencies#####################
 
-############## PG Update and install Postgresql #####################
-sudo apt-get install postgresql postgresql-client -y
+############## PG Update and install Postgresql ##############
+# Default postgresql install package (old method)
+#sudo apt-get install postgresql postgresql-client -y
+#sudo  -u postgres  createuser -s $usuario
+############## PG Update and install Postgresql ##############
+
+############## PG Update and install Postgresql new way ######
+sudo apt install curl ca-certificates
+sudo install -d /usr/share/postgresql-common/pgdg
+sudo curl -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc --fail https://www.postgresql.org/media/keys/ACCC4CF8.asc
+sudo sh -c 'echo "deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+sudo apt update
+sudo apt install -y postgresql-$PG_VERSION postgresql-client-$PG_VERSION
 sudo  -u postgres  createuser -s $usuario
-############## PG Update and install Postgresql #####################
+############## PG Update and install Postgresql ##############
 
 sudo mkdir $PATHBASE
 sudo mkdir $PATHREPOS
@@ -118,8 +145,8 @@ sudo mkdir $PATH_LOG
 cd $PATHBASE
 # Download Odoo from git source
 sudo git clone https://github.com/odoo/odoo.git -b $VERSION --depth $DEPTH $PATHBASE/odoo
+# Download OCA/web (optional backend theme for community only)
 sudo git clone https://github.com/oca/web.git -b $OCA_VERSION --depth $DEPTH $PATHREPOS_OCA/web
-
 
 #nodejs and less
 sudo ln -s /usr/bin/nodejs /usr/bin/node
@@ -146,10 +173,15 @@ sudo rm -rf $PATHBASE/venv
 sudo mkdir $PATHBASE/venv
 sudo chown -R $usuario: $PATHBASE/venv
 #virtualenv -q -p python3 $PATHBASE/venv
-python3 -m venv $PATHBASE/venv
-$PATHBASE/venv/bin/pip3 install --upgrade pip
-
+python3.11 -m venv $PATHBASE/venv
+$PATHBASE/venv/bin/pip3 install --upgrade pip setuptools
 $PATHBASE/venv/bin/pip3 install -r $PATHBASE/odoo/requirements.txt
+
+######### Begin Add your custom python extra libs #############
+# (e.g. phonenumbers for Odoo WhatsApp App.)
+$PATHBASE/venv/bin/pip3 install phonenumbers
+
+######### end extra python pip libs ###########################
 
 cd $DIR_PATH
 
@@ -167,20 +199,21 @@ db_port = False
 ;db_password =
 data_dir = $PATHBASE/data
 logfile= $PATH_LOG/odoo$VCODE-server.log
+;log_handler = :WARNING, :ERROR
 
-xmlrpc_port = $PORT
+http_port = $PORT
+;gevent_port = 8072
 ;dbfilter = odoo$VCODE
-logrotate = True
 limit_time_real = 6000
 limit_time_cpu = 6000
-;gevent_port = 8072
+
 proxy_mode = False
 
 ############# addons path ######################################
 
 addons_path =
     $PATHREPOS,
-    #$PATHREPOS_OCA/web,
+    $PATHREPOS_OCA/web,
     $PATHBASE/odoo/addons
 
 #################################################################
@@ -222,7 +255,6 @@ echo "
 crontab temporal
 rm temporal
 eof
-
 
 echo "Odoo $VERSION Installation has finished!! ;) by odooerpcloud.com"
 IP=$(ip route get 8.8.8.8 | head -1 | cut -d' ' -f7)
