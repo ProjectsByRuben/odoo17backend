@@ -1,30 +1,34 @@
 # -*- coding: utf-8 -*-
 {
-    "name": "Library",
-    "summary": "Library Management",
-    "description": """
-    Library Management
+    'name': "../extra-addons/odoo17backend/apps/library",
+
+    'summary': "Short (1 phrase/line) summary of the module's purpose",
+
+    'description': """
+Long description of module's purpose
     """,
-    "author": "Praxya Soluciones",
-    "website": "https://www.praxya.com",
-    "category": "Services",
-    "version": "1.5",
-    "license": "AGPL-3",
-    "application": True,
+
+    'author': "My Company",
+    'website': "https://www.yourcompany.com",
+
+    # Categories can be used to filter modules in modules listing
+    # Check https://github.com/odoo/odoo/blob/15.0/odoo/addons/base/data/ir_module_category_data.xml
+    # for the full list
+    'category': 'Uncategorized',
+    'version': '0.1',
+
     # any module necessary for this one to work correctly
-    "depends": [
-        "base",
-    ],
+    'depends': ['base'],
+
     # always loaded
-    "data": [
-        "security/ir.model.access.csv",
-        "security/groups.xml",
-        "views/library_book_views.xml",
-        "views/library_author_views.xml",
-        "views/library_book_category_views.xml",
-        "views/library_book_order_views.xml",
-        "views/menus.xml",
-        "data/library_book_stages.xml",
-        "data/library_book_categories.xml",
+    'data': [
+        # 'security/ir.model.access.csv',
+        'views/views.xml',
+        'views/templates.xml',
+    ],
+    # only loaded in demonstration mode
+    'demo': [
+        'demo/demo.xml',
     ],
 }
+
