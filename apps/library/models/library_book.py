@@ -6,6 +6,8 @@ from odoo import models, fields
 class LibraryBook(models.Model):
     _name = 'library.book'
 
+    _description = 'Library Book Model'
+
     name = fields.Char(
         string="Book",
         size=20,

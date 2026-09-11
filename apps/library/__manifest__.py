@@ -20,6 +20,9 @@
 
     # always loaded
     'data': [
+        "security/ir.model.access.csv",
+        "views/library_book.xml",
+        "views/menus.xml",
 
     ],
 }
